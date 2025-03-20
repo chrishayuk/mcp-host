@@ -1,4 +1,4 @@
-# servers/time_server/tests/test_time_server.py
+# servers/mcp_time_server/tests/test_time_server.py
 
 import re
 import pytest
@@ -8,9 +8,9 @@ from zoneinfo import ZoneInfo
 # Import your time tools.
 # Adjust the import based on your package structure.
 # For example, if your tools are in:
-# servers/time_server/src/time_server/tools/time_tools.py
+# servers/time_server/src/mcp_time_server/tools/time_tools.py
 # then the package might be named "time_server.tools"
-from time_server.tools import get_current_time, convert_time
+from mcp_time_server.tools import get_current_time, convert_time
 
 def test_get_current_time_valid():
     # Use a known valid timezone, e.g., "UTC"

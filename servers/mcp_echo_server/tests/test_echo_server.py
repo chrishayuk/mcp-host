@@ -1,4 +1,4 @@
-from echo_server.tools import echo
+from mcp_echo_server.tools import echo
 
 def test_echo_valid():
     result = echo("Hello, World!")

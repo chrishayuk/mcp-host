@@ -39,18 +39,18 @@ def load_config(project_root: str) -> Dict[str, Any]:
         },
         "mcp_servers": {
             "time_server": {
-                "location": "servers/time_server/src", 
+                "location": "servers/mcp_time_server/src", 
                 "enabled": True,
                 "tools": {
-                    "module": "time_server.tools",
+                    "module": "mcp_time_server.tools",
                     "enabled": True
                 }
             },
             "echo_server": {
-                "location": "servers/echo_server/src", 
+                "location": "servers/mcp_echo_server/src", 
                 "enabled": True,
                 "tools": {
-                    "module": "echo_server.tools",
+                    "module": "mcp_echo_server.tools",
                     "enabled": True
                 }
             }

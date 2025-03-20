@@ -1,4 +1,4 @@
-# echo_server/tools.py
+# mcp_echo_server/tools.py
 from pydantic import ValidationError
 from mcp.shared.exceptions import McpError
 
@@ -6,7 +6,7 @@ from mcp.shared.exceptions import McpError
 from common.mcp_tool_decorator import mcp_tool
 
 # project imports – using absolute imports to reference the echo server models
-from echo_server.models import EchoInput, EchoResult
+from mcp_echo_server.models import EchoInput, EchoResult
 
 @mcp_tool(name="echo", description="Echo back the input message")
 def echo(message: str) -> dict:

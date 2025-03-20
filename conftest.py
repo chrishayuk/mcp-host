@@ -13,7 +13,7 @@ project_root = os.path.abspath(os.path.dirname(__file__))
 common_src = os.path.join(project_root, "common", "src")
 runtime_src = os.path.join(project_root, "runtime", "src")
 time_server_src = os.path.join(project_root, "servers", "time_server", "src")
-echo_server_src = os.path.join(project_root, "servers", "echo_server", "src")
+echo_server_src = os.path.join(project_root, "servers", "mcp_echo_server", "src")
 
 # Insert them into sys.path (if they're not already present).
 # We reverse the order to ensure the first path is highest priority

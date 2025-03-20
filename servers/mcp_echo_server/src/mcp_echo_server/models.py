@@ -1,4 +1,4 @@
-# echo_server/models.py
+# mcp_echo_server/models.py
 from pydantic import BaseModel, Field
 
 class EchoInput(BaseModel):

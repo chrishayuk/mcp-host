@@ -127,7 +127,7 @@ core:
 
 mcp_servers:
   time_server:
-    location: servers/time_server/src
+    location: servers/mcp_time_server/src
     enabled: true
     tools:
       module: time_server.tools
