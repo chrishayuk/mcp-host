@@ -9,7 +9,7 @@ dependencies = [
     "pydantic>=2.10.6"
 ]
 packages = [
-    { include = "echo_server", from = "src/echo_server" }
+    { include = "echo_server", from = "src" }
 ]
 
 [build-system]

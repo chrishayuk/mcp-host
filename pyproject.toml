@@ -4,10 +4,14 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
+
+# Include all necessary dependencies
 dependencies = [
-  "time-server @ file:///Users/christopherhay/chris-source/agent-x/serverless-mcp/servers/time_server",
-  "echo-server @ file:///Users/christopherhay/chris-source/agent-x/serverless-mcp/servers/echo_server"
+    "mcp>=1.4.1",
+    "pydantic>=2.10.6",
+    "pyyaml>=6.0.2",
 ]
+
 # Define your packages using inline tables so that an editable install picks up the correct source directories.
 packages = [
   { include = "common", from = "common/src" },
@@ -16,8 +20,14 @@ packages = [
   { include = "echo_server", from = "servers/echo_server/src" }
 ]
 
+[project.optional-dependencies]
+dev = [
+  "pytest-asyncio>=0.25.3",
+  "pytest>=8.3.5",
+]
+
 [tool.uv.workspace]
-members = ["common", "runtime", "time-server", "echo-server"]
+members = ["common", "runtime"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["common", "runtime", "time_server", "echo_server"]
@@ -25,12 +35,6 @@ packages = ["common", "runtime", "time_server", "echo_server"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[dependency-groups]
-dev = [
-  "pytest-asyncio>=0.25.3",
-  "pytest>=8.3.5",
-]
 
 [tool.pytest.ini_options]
 minversion = "8.3.5"

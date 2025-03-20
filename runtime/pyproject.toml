@@ -5,3 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+packages = [
+  { include = "runtime", from = "src" }
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

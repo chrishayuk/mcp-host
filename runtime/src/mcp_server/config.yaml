@@ -1,0 +1,65 @@
+# MCP Server Host Configuration
+# This is the configuration of our MCP Server Host
+# With this configuration, you can add tools, resources or prompts for the host
+
+# Host server settings
+host:
+  name: generic-mcp
+  log_level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# Core infrastructure paths
+core:
+  common: common/src
+  runtime: runtime/src
+
+# MCP Tool servers configuration
+mcp_servers:
+  time_server:
+    location: servers/time_server/src
+    enabled: true
+    tools:
+      module: time_server.tools
+      enabled: true
+    resources:
+      module: time_server.resources
+      enabled: false
+    prompts:
+      module: time_server.prompts
+      enabled: false
+  
+  echo_server:
+    location: servers/echo_server/src
+    enabled: true
+    tools:
+      module: echo_server.tools
+      enabled: true
+    resources:
+      module: echo_server.resources
+      enabled: false
+    prompts:
+      module: echo_server.prompts
+      enabled: false
+  
+  # Example of a server with all components enabled
+  # complete_server:
+  #   location: servers/complete_server/src
+  #   enabled: true
+  #   tools:
+  #     module: complete_server.tools
+  #     enabled: true
+  #   resources:
+  #     module: complete_server.resources
+  #     enabled: true
+  #   prompts:
+  #     module: complete_server.prompts
+  #     enabled: true
+
+# Enable automatic discovery of additional MCP servers in the servers/ directory
+auto_discover: true
+
+# Auto-discovery configuration
+discovery:
+  components:
+    tools: true
+    resources: false
+    prompts: false

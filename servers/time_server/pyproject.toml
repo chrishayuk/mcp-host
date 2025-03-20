@@ -10,7 +10,7 @@ dependencies = [
     "pyz>=0.4.3",
 ]
 packages = [
-    { include = "time_server", from = "src/time_server" }
+    { include = "time_server", from = "src" }
 ]
 
 [build-system]

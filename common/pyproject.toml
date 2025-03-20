@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 packages = [
-  { include = "common", from = "src/common" }
+  { include = "common", from = "src" }
 ]
 
 [build-system]
