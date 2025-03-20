@@ -61,4 +61,4 @@ def test_get_project_root():
     
     # Verify the project root path
     assert os.path.isdir(root_path)
-    assert os.path.basename(root_path) in ["serverless-mcp", "agent-x"]
+    assert os.path.basename(root_path) in ["mcp-host", "agent-x"]

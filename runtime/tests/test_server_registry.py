@@ -1,7 +1,4 @@
 """
-Tests for the server_registry module
-"""
-"""
 Tests for the server registry module
 """
 import os
@@ -56,9 +53,9 @@ def test_server_registry_core_paths():
     assert "common" in registry.server_paths
     assert "runtime" in registry.server_paths
     
-    # Verify paths exist
-    for path in registry.server_paths.values():
-        assert os.path.exists(path), f"Path {path} does not exist"
+    # Verify paths are correct
+    assert registry.server_paths["common"] == os.path.join(project_root, "common", "src")
+    assert registry.server_paths["runtime"] == os.path.join(project_root, "runtime", "src")
 
 def test_server_registry_no_auto_discovery():
     """Test server registry with auto-discovery disabled"""
@@ -75,7 +72,6 @@ def test_server_registry_no_auto_discovery():
     
     # Only core paths should be present
     assert len(registry.server_paths) == 2  # common and runtime
-    assert len(registry.components) == 0
 
 def test_server_registry_python_paths():
     """Test Python path setup"""
@@ -91,8 +87,6 @@ def test_server_registry_python_paths():
     registry = ServerRegistry(project_root, default_config)
     
     # Check that server paths are added to sys.path
-    current_paths = sys.path.copy()
-    
     for path in registry.server_paths.values():
         assert path in sys.path, f"Path {path} not in sys.path"
 

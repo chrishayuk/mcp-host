@@ -35,7 +35,7 @@ rebuild: clean-all venv install
 # Run the server
 run-server:
 	@echo "Running the server..."
-	PYTHONPATH=. uv run python runtime/src/mcp_server/generic_mcp_server.py
+	PYTHONPATH=. uv run python runtime/src/mcp_server/main.py
 
 # Run tests
 test:
@@ -50,4 +50,4 @@ check-structure:
 	@echo "\nPython modules:"
 	find . -name "*.py" | grep -v "__pycache__" | sort
 	@echo "\nInstalled packages:"
-	uv pip list | grep -E 'time-server|echo-server|serverless-mcp'
+	uv pip list | grep -E 'time-server|echo-server|mcp-host'

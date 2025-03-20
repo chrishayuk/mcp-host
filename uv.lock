@@ -4,8 +4,8 @@ requires-python = ">=3.11"
 [manifest]
 members = [
     "common",
+    "mcp-host",
     "runtime",
-    "serverless-mcp",
 ]
 
 [[package]]
@@ -148,6 +148,39 @@ sdist = { url = "https://files.pythonhosted.org/packages/50/cc/5c5bb19f1a0f8f89a
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e8/0e/885f156ade60108e67bf044fada5269da68e29d758a10b0c513f4d85dd76/mcp-1.4.1-py3-none-any.whl", hash = "sha256:a7716b1ec1c054e76f49806f7d96113b99fc1166fc9244c2c6f19867cb75b593", size = 72448 },
 ]
+
+[[package]]
+name = "mcp-host"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "mcp" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mcp", specifier = ">=1.4.1" },
+    { name = "pydantic", specifier = ">=2.10.6" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.5" },
+    { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.25.3" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=8.3.5" }]
 
 [[package]]
 name = "packaging"
@@ -322,31 +355,6 @@ wheels = [
 name = "runtime"
 version = "0.1.0"
 source = { editable = "runtime" }
-
-[[package]]
-name = "serverless-mcp"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "mcp" },
-    { name = "pydantic" },
-    { name = "pyyaml" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-    { name = "pytest-asyncio" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "mcp", specifier = ">=1.4.1" },
-    { name = "pydantic", specifier = ">=2.10.6" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.5" },
-    { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.25.3" },
-    { name = "pyyaml", specifier = ">=6.0.2" },
-]
 
 [[package]]
 name = "sniffio"
