@@ -1,58 +1,116 @@
-# runtime/src/mcp_server
-import os
+"""
+MCP Server Module
+
+This module provides the core MCP server functionality for 
+running tools and managing server operations.
+"""
+import asyncio
 import json
-import yaml
-import logging
+import importlib
 
-# logger
-logger = logging.getLogger("generic_mcp_server")
-
-# MCP Imports
+from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool, TextContent, ImageContent, EmbeddedResource
 
-# Imports
-from runtime.src.mcp_server.se import Server
-from common.mcp_tool_decorator import TOOLS_REGISTRY
+from runtime.src.mcp_server.logging_config import get_logger, logger
 
-async def serve() -> None:
-    """Run the MCP server"""
-    # Load configuration to get host server name
-    config = {}
-    project_root = get_project_root()
-    config_path = os.path.join(project_root, "config.yaml")
-    if os.path.exists(config_path):
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
+class MCPServer:
+    """
+    Manages the MCP (Messaging Control Protocol) server operations.
     
-    server_name = config.get("host", {}).get("name", "generic-mcp")
-    server = Server(server_name)
-
-    @server.list_tools()
-    async def list_tools() -> list[Tool]:
-        if not TOOLS_REGISTRY:
-            logger.warning("No tools available")
-            return []
-        return [func._mcp_tool for func in TOOLS_REGISTRY.values()]
-
-    @server.call_tool()
-    async def call_tool(name: str, arguments: dict) -> list[TextContent | ImageContent | EmbeddedResource]:
-        if name not in TOOLS_REGISTRY:
-            raise ValueError(f"Tool not found: {name}")
-        func = TOOLS_REGISTRY[name]
+    Handles tool discovery, registration, and execution.
+    """
+    def __init__(self, config: dict):
+        """
+        Initialize the MCP server.
+        
+        Args:
+            config: Configuration dictionary for the server.
+        """
+        self.config = config
+        # Reconfigure logger with the loaded config
+        self.logger = get_logger(config=config)
+        
+        # Server name from configuration
+        self.server_name = config.get("host", {}).get("name", "generic-mcp")
+        
+        # Tools registry
+        self.tools_registry = self._import_tools_registry()
+    
+    def _import_tools_registry(self) -> dict:
+        """
+        Dynamically import the tools registry.
+        
+        Returns:
+            Dictionary of available tools.
+        """
         try:
-            result = func(**arguments)
-        except Exception as e:
-            logger.error(f"Error processing tool '{name}': {e}", exc_info=True)
-            raise ValueError(f"Error processing tool '{name}': {str(e)}")
-        return [TextContent(type="text", text=json.dumps(result, indent=2))]
+            tools_decorator_module = importlib.import_module("common.mcp_tool_decorator")
+            tools_registry = getattr(tools_decorator_module, "TOOLS_REGISTRY", {})
+        except (ImportError, AttributeError) as e:
+            self.logger.error(f"Failed to import TOOLS_REGISTRY: {e}")
+            tools_registry = {}
+        
+        if not tools_registry:
+            self.logger.warning("No tools available")
+        else:
+            self.logger.info(f"Loaded {len(tools_registry)} tools")
+            self.logger.info(f"Available tools: {', '.join(tools_registry.keys())}")
+        
+        return tools_registry
+    
+    async def serve(self) -> None:
+        """
+        Run the MCP server with stdio communication.
+        
+        Sets up server, tool listing, and tool execution handlers.
+        """
+        # Create MCP server instance
+        server = Server(self.server_name)
 
-    options = server.create_initialization_options()
-    async with stdio_server() as (read_stream, write_stream):
-        await server.run(read_stream, write_stream, options)
+        @server.list_tools()
+        async def list_tools() -> list[Tool]:
+            """
+            List available tools.
+            
+            Returns:
+                List of tool descriptions.
+            """
+            if not self.tools_registry:
+                self.logger.warning("No tools available")
+                return []
+            return [func._mcp_tool for func in self.tools_registry.values()]
 
-def get_project_root() -> str:
-    """Determine the project root directory"""
-    import os
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
+        @server.call_tool()
+        async def call_tool(name: str, arguments: dict) -> list[TextContent | ImageContent | EmbeddedResource]:
+            """
+            Execute a specific tool with given arguments.
+            
+            Args:
+                name: Name of the tool to execute.
+                arguments: Arguments for the tool.
+            
+            Returns:
+                List of content resulting from tool execution.
+            
+            Raises:
+                ValueError: If tool is not found or fails to execute.
+            """
+            if name not in self.tools_registry:
+                raise ValueError(f"Tool not found: {name}")
+            
+            func = self.tools_registry[name]
+            try:
+                result = func(**arguments)
+            except Exception as e:
+                self.logger.error(f"Error processing tool '{name}': {e}", exc_info=True)
+                raise ValueError(f"Error processing tool '{name}': {str(e)}")
+            
+            return [TextContent(type="text", text=json.dumps(result, indent=2))]
+
+        # Create initialization options
+        options = server.create_initialization_options()
+        
+        # Run server with stdio communication
+        async with stdio_server() as (read_stream, write_stream):
+            await server.run(read_stream, write_stream, options)
