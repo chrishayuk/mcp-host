@@ -27,7 +27,7 @@ dev = [
 ]
 
 [tool.uv.workspace]
-members = ["common", "runtime"]
+members = ["common", "runtime", "cli"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["common", "runtime", "time_server", "echo_server"]
@@ -52,3 +52,6 @@ testpaths = [
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[project.scripts]
+mcp-server-scaffolder = "cli.mcp_server_scaffold_cli:app"
