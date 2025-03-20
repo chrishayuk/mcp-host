@@ -1,0 +1,45 @@
+[project]
+name = "serverless-mcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "time-server @ file:///Users/christopherhay/chris-source/agent-x/serverless-mcp/servers/time_server",
+  "echo-server @ file:///Users/christopherhay/chris-source/agent-x/serverless-mcp/servers/echo_server"
+]
+# Define your packages using inline tables so that an editable install picks up the correct source directories.
+packages = [
+  { include = "common", from = "common/src" },
+  { include = "runtime", from = "runtime/src" },
+  { include = "time_server", from = "servers/time_server/src" },
+  { include = "echo_server", from = "servers/echo_server/src" }
+]
+
+[tool.uv.workspace]
+members = ["common", "runtime", "time-server", "echo-server"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["common", "runtime", "time_server", "echo_server"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+  "pytest-asyncio>=0.25.3",
+  "pytest>=8.3.5",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.3.5"
+testpaths = [
+  "common/tests",
+  "runtime/tests",
+  "servers/time_server/tests",
+  "servers/echo_server/tests",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true

@@ -1,0 +1,17 @@
+[project]
+name = "echo-server"
+version = "0.1.0"
+description = "Echo server for MCP tools"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.4.1",
+    "pydantic>=2.10.6"
+]
+packages = [
+    { include = "echo_server", from = "src/echo_server" }
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
