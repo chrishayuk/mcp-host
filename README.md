@@ -23,23 +23,20 @@ This project provides a flexible, extensible Messaging Control Protocol (MCP) Ho
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/mcp-host.git
+git clone https://github.com/chrishayuk/mcp-host.git
 cd mcp-host
 ```
 
 ### 2. Create Virtual Environment
 
 ```bash
-uv venv
-source .venv/bin/activate  # On Unix/macOS
-.venv\Scripts\activate     # On Windows
+make venv
 ```
 
 ### 3. Install Dependencies
 
 ```bash
-uv pip install -r requirements.txt
-uv pip install -r requirements-dev.txt
+make rebuild
 ```
 
 ## Running the Server
@@ -52,6 +49,9 @@ uv run python runtime/src/mcp_server/main.py
 
 # Or directly with Python
 python runtime/src/mcp_server/main.py
+
+# Or with makefile
+make run-server
 ```
 
 ### Using MCP CLI
@@ -170,8 +170,5 @@ def my_custom_tool(arg1: str, arg2: int) -> dict:
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
-
-Your Name - your.email@example.com
-
-Project Link: [https://github.com/your-org/mcp-host](https://github.com/your-org/mcp-host)
+Project Link: [https://github.com/chrishayuk/mcp-host](https://github.com/chrishayuk/mcp-host)
 ```
