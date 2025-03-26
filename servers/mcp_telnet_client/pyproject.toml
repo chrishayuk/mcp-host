@@ -1,0 +1,21 @@
+[project]
+name = "mcp-telnet-client"
+version = "0.1.0"
+description = "Telnet client for MCP tools"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.4.1",
+    "pydantic>=2.10.6",
+    "telnetlib3>=2.0.4",
+]
+packages = [
+    { include = "mcp_telnet_client", from = "src" }
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_telnet_client"]

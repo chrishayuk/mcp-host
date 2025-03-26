@@ -39,6 +39,19 @@ mcp_servers:
     prompts:
       module: mcp_echo_server.prompts
       enabled: false
+
+  telnet_client:
+    location: servers/mcp_telnet_client/src
+    enabled: true
+    tools:
+      module: mcp_telnet_client.tools
+      enabled: true
+    resources:
+      module: mcp_telnet_client.resources
+      enabled: false
+    prompts:
+      module: mcp_telnet_client.prompts
+      enabled: false
   
   # Example of a server with all components enabled
   # complete_server:

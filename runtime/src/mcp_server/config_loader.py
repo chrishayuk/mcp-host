@@ -53,6 +53,14 @@ def load_config(project_root: str) -> Dict[str, Any]:
                     "module": "mcp_echo_server.tools",
                     "enabled": True
                 }
+            },
+            "telnet_client": {
+                "location": "servers/mcp_telnet_client/src", 
+                "enabled": True,
+                "tools": {
+                    "module": "mcp_telnet_client.tools",
+                    "enabled": True
+                }
             }
         },
         "auto_discover": True,
