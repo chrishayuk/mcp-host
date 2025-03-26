@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./servers/mcp_playwright_server/src/mcp_playwright_server/browser/mock_json_browser"
+    ]
+}

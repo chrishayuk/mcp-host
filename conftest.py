@@ -12,12 +12,13 @@ project_root = os.path.abspath(os.path.dirname(__file__))
 # We use the parent directory of the package directories to ensure proper imports
 common_src = os.path.join(project_root, "common", "src")
 runtime_src = os.path.join(project_root, "runtime", "src")
-time_server_src = os.path.join(project_root, "servers", "time_server", "src")
+time_server_src = os.path.join(project_root, "servers", "mcp_time_server", "src")
 echo_server_src = os.path.join(project_root, "servers", "mcp_echo_server", "src")
+playwright_server_src = os.path.join(project_root, "servers", "mcp_playwright_server", "src")
 
 # Insert them into sys.path (if they're not already present).
 # We reverse the order to ensure the first path is highest priority
-paths = [common_src, runtime_src, time_server_src, echo_server_src]
+paths = [common_src, runtime_src, time_server_src, echo_server_src, playwright_server_src]
 for path in reversed(paths):
     if os.path.exists(path) and path not in sys.path:
         sys.path.insert(0, path)

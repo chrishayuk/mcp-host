@@ -17,7 +17,8 @@ packages = [
   { include = "common", from = "common/src" },
   { include = "runtime", from = "runtime/src" },
   { include = "mcp_time_server", from = "servers/mcp_time_server/src" },
-  { include = "mcp_echo_server", from = "servers/mcp_echo_server/src" }
+  { include = "mcp_echo_server", from = "servers/mcp_echo_server/src" },
+  { include = "mcp_playwright_server", from = "servers/mcp_playwright_server/src" }
 ]
 
 [project.optional-dependencies]
@@ -30,7 +31,7 @@ dev = [
 members = ["common", "runtime", "cli"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["common", "runtime", "mcp_time_server", "mcp_echo_server"]
+packages = ["common", "runtime", "mcp_time_server", "mcp_echo_server", "mcp_playwright_server"]
 
 [build-system]
 requires = ["hatchling"]
@@ -48,6 +49,7 @@ testpaths = [
   "runtime/tests",
   "servers/time_server/tests",
   "servers/mcp_echo_server/tests",
+  "servers/mcp_playwright_server/tests"
 ]
 
 [tool.hatch.metadata]
